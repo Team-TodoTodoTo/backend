@@ -1,5 +1,7 @@
 import Koa, { Context } from 'koa';
 import database from './global/database';
+import authRouter from './domain/auth/router/AuthRouter';
+import bodyParser from 'koa-bodyparser';
 
 const app = new Koa();
 
@@ -11,6 +13,10 @@ async function checkDatabaseConnection() {
     console.error('Unable to connect to the database:', error);
   }
 }
+
+app.use(bodyParser());
+
+app.use(authRouter.routes()).use(authRouter.allowedMethods());
 
 app.use((ctx: Context) => {
   ctx.body = 'Hello World';
