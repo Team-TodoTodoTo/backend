@@ -22,10 +22,6 @@ app.use(authRouter.routes()).use(authRouter.allowedMethods());
 app.use(todoRouter.routes()).use(todoRouter.allowedMethods());
 app.use(categoryRouter.routes()).use(categoryRouter.allowedMethods());
 
-app.use((ctx: Context) => {
-  ctx.body = 'Hello World';
-});
-
 app.listen(4000, async () => {
   console.log('Server is running at http://localhost:4000');
   await checkDatabaseConnection();

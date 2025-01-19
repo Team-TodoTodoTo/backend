@@ -4,29 +4,37 @@ import { CreateCategoryDto } from '../dto/CreateCategoryDto';
 
 class CategoryController {
   static async createCategory(ctx: Context) {
-    const { name } = ctx.request.body as CreateCategoryDto;
-    const response = await CategoryService.createCategory({ name });
+    const { title } = ctx.request.body as CreateCategoryDto;
+    const userId = ctx.state.userId;
+
+    const response = await CategoryService.createCategory({ title }, userId);
     ctx.status = 201;
     ctx.body = response;
   }
 
   static async updateCategory(ctx: Context) {
     const { categoryId } = ctx.params;
-    const { name } = ctx.request.body as CreateCategoryDto;
-    const response = await CategoryService.updateCategory(Number(categoryId), { name });
+    const userId = ctx.state.userId;
+
+    const { title } = ctx.request.body as CreateCategoryDto;
+    const response = await CategoryService.updateCategory(Number(categoryId), { title }, userId);
     ctx.status = 200;
     ctx.body = response;
   }
 
   static async deleteCategory(ctx: Context) {
     const { categoryId } = ctx.params;
-    await CategoryService.deleteCategory(Number(categoryId));
+    const userId = ctx.state.userId;
+
+    await CategoryService.deleteCategory(Number(categoryId), userId);
     ctx.status = 204;
     ctx.body = { message: '카테고리가 삭제되었습니다.' };
   }
 
   static async getCategories(ctx: Context) {
-    const response = await CategoryService.getCategories();
+    const userId = ctx.state.userId;
+
+    const response = await CategoryService.getCategories(userId);
     ctx.status = 200;
     ctx.body = response;
   }

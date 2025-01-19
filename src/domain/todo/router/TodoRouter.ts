@@ -1,13 +1,14 @@
 import Router from 'koa-router';
 import TodoController from '../controller/TodoController';
+import { authMiddleware } from '../../../global/AuthMiddleware';
 
 const todoRouter = new Router({ prefix: '/todos' });
 
-todoRouter.post('/', TodoController.createTodo);
-todoRouter.put('/:todoId', TodoController.updateTodo);
-todoRouter.get('/day', TodoController.getByDay);
-todoRouter.get('/week', TodoController.getByWeek);
-todoRouter.get('/month', TodoController.getByMonth);
-todoRouter.delete('/:todoId', TodoController.deleteTodo);
+todoRouter.post('/', authMiddleware, TodoController.createTodo);
+todoRouter.put('/:todoId', authMiddleware, TodoController.updateTodo);
+todoRouter.get('/day', authMiddleware, TodoController.getByDay);
+todoRouter.get('/week', authMiddleware, TodoController.getByWeek);
+todoRouter.get('/month', authMiddleware, TodoController.getByMonth);
+todoRouter.delete('/:todoId', authMiddleware, TodoController.deleteTodo);
 
 export default todoRouter;
