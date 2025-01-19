@@ -2,6 +2,7 @@ import Koa, { Context } from 'koa';
 import database from './global/database';
 import authRouter from './domain/auth/router/AuthRouter';
 import bodyParser from 'koa-bodyparser';
+import todoRouter from './domain/todo/router/TodoRouter';
 
 const app = new Koa();
 
@@ -17,6 +18,7 @@ async function checkDatabaseConnection() {
 app.use(bodyParser());
 
 app.use(authRouter.routes()).use(authRouter.allowedMethods());
+app.use(todoRouter.routes()).use(todoRouter.allowedMethods());
 
 app.use((ctx: Context) => {
   ctx.body = 'Hello World';
