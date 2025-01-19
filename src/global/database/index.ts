@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { knex } from 'knex';
+import { createUsersTable } from '../../domain/user/entity/User';
 
 dotenv.config();
 
@@ -14,5 +15,13 @@ const database = knex({
   },
   pool: { min: 0, max: 10 },
 });
+
+(async () => {
+  try {
+    await createUsersTable(database);
+  } catch (error) {
+    console.error('❌ Database initialization failed:', error);
+  }
+})();
 
 export default database;
