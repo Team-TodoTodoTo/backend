@@ -1,4 +1,6 @@
-import Koa, { Context } from 'koa';
+process.env.TZ = 'Asia/Seoul';
+
+import Koa from 'koa';
 import database from './global/database';
 import authRouter from './domain/auth/router/AuthRouter';
 import bodyParser from 'koa-bodyparser';
@@ -24,5 +26,6 @@ app.use(categoryRouter.routes()).use(categoryRouter.allowedMethods());
 
 app.listen(4000, async () => {
   console.log('Server is running at http://localhost:4000');
+  console.log('Current Server time is ', new Date().toLocaleString());
   await checkDatabaseConnection();
 });
