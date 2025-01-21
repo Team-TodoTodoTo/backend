@@ -1,6 +1,7 @@
 process.env.TZ = 'Asia/Seoul';
 
 import Koa from 'koa';
+import cors from '@koa/cors';
 import database from './global/database';
 import authRouter from './domain/auth/router/AuthRouter';
 import bodyParser from 'koa-bodyparser';
@@ -8,6 +9,8 @@ import todoRouter from './domain/todo/router/TodoRouter';
 import categoryRouter from './domain/categoty/router/CategoryRouter';
 
 const app = new Koa();
+
+app.use(cors());
 
 async function checkDatabaseConnection() {
   try {
