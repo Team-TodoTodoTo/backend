@@ -18,12 +18,17 @@ class TodoRepository {
     return createdTodo;
   }
 
-  static async updateTodo(todoId: number, { todo, categoryId, date }: UpdateTodoDto, userId: number): Promise<Todo> {
+  static async updateTodo(
+    todoId: number,
+    { todo, categoryId, date, isCompleted }: UpdateTodoDto,
+    userId: number
+  ): Promise<Todo> {
     await database(Todo.tableName).where('id', todoId).update({
       todo,
       categoryId,
       date,
       userId,
+      isCompleted,
       updatedAt: database.fn.now(),
     });
 

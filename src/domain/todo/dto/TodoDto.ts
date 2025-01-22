@@ -4,4 +4,6 @@ export interface CreateTodoDto {
   date: string;
 }
 
-export interface UpdateTodoDto extends CreateTodoDto {}
+export interface UpdateTodoDto extends CreateTodoDto {
+  isCompleted: boolean;
+}
