@@ -16,7 +16,7 @@ class TodoController {
     const { todoId } = ctx.params;
     const userId = ctx.state.userId;
     const { todo, categoryId, date } = ctx.request.body as UpdateTodoDto;
-    const response = await TodoService.update(Number(todoId), { todo, categoryId, date }, userId);
+    const response = await TodoService.update(Number(todoId), { todo, categoryId, date, isCompleted }, userId);
     ctx.status = 200;
     ctx.body = response;
   }
