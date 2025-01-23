@@ -37,11 +37,19 @@ class TodoRepository {
   }
 
   static async getByDay(date: string, userId: number): Promise<Todo[]> {
-    return database(Todo.tableName).where({ date, userId }).select('*');
+    return database(Todo.tableName)
+      .leftJoin('categories', 'todos.categoryId', 'categories.id')
+      .select('todos.*', 'categories.title as categoryTitle')
+      .where('todos.date', date)
+      .andWhere('todos.userId', userId);
   }
 
   static async getByDateRange(startDate: string, endDate: string, userId: number): Promise<Todo[]> {
-    return database(Todo.tableName).whereBetween('date', [startDate, endDate]).andWhere('userId', userId).select('*');
+    return database(Todo.tableName)
+      .leftJoin('categories', 'todos.categoryId', 'categories.id')
+      .select('todos.*', 'categories.title as categoryTitle')
+      .whereBetween('todos.date', [startDate, endDate])
+      .andWhere('todos.userId', userId);
   }
 
   static async delete(todoId: number, userId: number): Promise<void> {
